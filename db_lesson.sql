@@ -5,6 +5,11 @@ CREATE TABLE `departments`(
 `created_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP,
 `updated_at` TIMESTAMP NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP
 );
+-- Q.primary keyが存在しないテーブルにはどのような不都合がありますか？
+/*
+ほかの値が重複されるので値を変更する時や削除するときに情報が複数あってわかりにくくなる。
+*/
+
 /*
 ・department_id→部署ID、name→部署名、created_at→作成日時、updated_at→更新日時
 ・DEFAULTはデフォルト値を定義する。NULLは「データなし」を意味する値
@@ -63,12 +68,15 @@ SELECT name,age FROM people WHERE gender = 1 ORDER BY age DESC;
 
 -- Q6
 /*
-peopleテーブルのname、email、ageカラムを作った時間でレコードを並び変えている。
+peopleテーブルのname、email、ageカラムを作った時間の昇順でレコードを並び変えている。
 */
 
 -- Q7
+/*
 SELECT name FROM people WHERE age BETWEEN 20 AND 29 AND gender = 2;
 SELECT name FROM people WHERE age BETWEEN 40 AND 49 AND gender = 1;
+*/
+SELECT name FROM people WHERE age BETWEEN 20 AND 29 AND gender = 2 OR age BETWEEN 40 AND 49 AND gender = 1;
 
 -- Q8
 SELECT name FROM people WHERE department_id = 1 ORDER BY age ASC;
@@ -90,4 +98,4 @@ INNER JOIN reports ON people.person_id = reports.person_id;
 
 -- Q11
 SELECT people.name FROM people
-LEFT OUTER JOIN reports ON people.person_id = reports.person_id WHERE reports.content IS ;
+LEFT OUTER JOIN reports ON people.person_id = reports.person_id WHERE reports.content IS NULL;
